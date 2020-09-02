@@ -1,0 +1,6 @@
+beans/FoodItem.class
+controllers/StoreController.class
+beans/Store.class
+beans/Purchase.class
+controllers/FoodItemController.class
+models/DatabaseHelper.class
