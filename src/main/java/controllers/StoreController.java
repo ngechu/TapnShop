@@ -1,11 +1,12 @@
 package controllers;
 
-import beans.Store;
+import TapnShop.models.Store;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import models.DatabaseHelper;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
+import ejb.StoreBean;
+import org.apache.commons.beanutils.BeanUtils;
 
+import javax.ejb.EJB;
+import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -14,38 +15,55 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
+
 @WebServlet(urlPatterns = {"/stores"})
+
 public class StoreController extends HttpServlet {
+    @EJB
+    private StoreBean storeBean;
+
+    @Inject
+    private Store store;
+
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        Session session = DatabaseHelper.getSessionFactory().openSession();
-        Transaction tx=session.getTransaction();
-        tx.begin();
+        try {
+            BeanUtils.populate(store, req.getParameterMap());
+            storeBean.save(store);
 
-        Store healthyDrinks =new Store();
-//        healthyDrinks.setStoreName(req.getParameter());
-//        healthyDrinks.setStoreLocation(req.getParameter());
-//        healthyDrinks.setStoreImage(req.getParameter());
-        session.save(healthyDrinks);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            ex.getMessage();
+
+        }
+    }
+
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        try {
+            List<Store> storesList = storeBean.list();
+
+            ObjectMapper json = new ObjectMapper();
+
+            String stores = json.writerWithDefaultPrettyPrinter().writeValueAsString(storesList);
+            resp.getWriter().println(stores);
 
 
-        tx.commit();
-
-
+        } catch (Exception ex) {
+            ex.getMessage();
+        }
     }
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Session session = DatabaseHelper.getSessionFactory().openSession();
-        Transaction tx=session.getTransaction();
-        tx.begin();
-        List<Store>stores=session.createQuery("From Store s").getResultList();
-        final ObjectMapper json = new ObjectMapper();
-        resp.getWriter().println(json.writeValueAsString(stores));
-
-        tx.commit();
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        try {
+            String storeId=req.getParameter("store");
+            storeBean.delete(Integer.parseInt(storeId));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 }
+

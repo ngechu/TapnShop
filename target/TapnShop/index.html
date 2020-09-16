@@ -5,25 +5,150 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="main.css">
     <link rel="stylesheet" href="normalize.css">
-    <title>TapnShop</title>
+    <a href="/"> <title>TapnShop</title> </a>
 </head>
 <body>
 
-   <div class="container">
+   <div class="mycontainer">
+      
        <nav>
            <img id="logo" src="img/logo.svg" alt="TapnShop" width="200px" height="auto">
            <h3>TapnShop</h3>
-       </nav>
-       <section class="tagline">
-           <h2>SELECT A STORE TO MAKE AN ORDER</h2>
-       </section>
-       <section class="stores">
 
-       </section>
+           
+          
+       </nav>
+
+       	<div id="headButton" class="modal">
+			<form class="modal-content animate" action="./stores" method="post">
+				
+				<div class="container">
+
+               <label for="storeImage"><b>Choose your Store Image </b></label>
+			   <input type="file" id="filepicker" name="storeImage" required />
+			  
+				
+
+
+					<label for="storeName"><b>StoreName</b></label>
+					<input
+						type="text"
+						placeholder="Enter your StoreName"
+						name="storeName"
+						required
+					/>
+
+					<label for="storeRating"><b>StoreRating</b></label>
+					<input
+						type="text"
+						placeholder="Enter Your storeRating"
+						name="storeRating"
+						required
+                    />
+                    <label for="storeLocation"><b>StoreLocation</b></label>
+					<input
+						type="text"
+						placeholder="Enter Your storeLocation"
+						name="storeLocation"
+						required
+					/>
+
+					<button type="submit">ADD STORE</button>
+					
+				</div>
+
+				<div class="container" style="background-color: #f1f1f1">
+					<button type="button"onclick="document.getElementById('headButton').style.display='none'" class="cancelbtn">
+	
+						Cancel
+					</button>
+				
+				</div>
+			</form>
+		</div>
+     <div class="foodDisplay">
+			
+        
+        <section class="tagline">
+           <button type="button" class="headButton" onclick="document.getElementById('headButton').style.display='block'">Add Store</button>
+           <h2>SELECT A STORE TO MAKE AN ORDER</h2>
+        </section>
+        
+        <section class="stores">
+
+
+        </section>
+	 </div>
+	 
+	 <!---------------------------------------------------------------------------------------->
+	 <!---------------------------------------------------------------------------------------->
+	   
+	 <div id="displayFoods" class="modal">
+			<form class="modal-content animate" action="./BuyNow" method="post">
+				
+				<div class="container">
+
+               <label for="foodImage"><b>Choose your Food Image </b></label>
+			   <input type="file" id="filepicker" name="foodImage" required />
+
+			   <label for="foodType"><b>FoodName</b></label>
+					<input
+						type="text"
+						placeholder="Enter your FoodName"
+						name="foodName"
+						required
+					/>
+
+					<label for="foodType"><b>FoodType</b></label>
+					<input
+						type="text"
+						placeholder="Enter Your foodType"
+						name="foodType"
+						required
+                    />
+                    <label for="price"><b>Price</b></label>
+					<input
+						type="text"
+						placeholder="Enter Your price"
+						name="price"
+						required
+					/>
+
+					<input
+						type="hidden"
+						placeholder="Enter your id"
+						id="food-id"
+						name="id"
+						required
+						value=""
+					/>
+
+					
+						<button class="headButton" type="submit">ADD FOODITEMS </button>
+				
+					
+				</div>
+
+				<div class="container" style="background-color: #f1f1f1">
+					<button type="button"onclick="document.getElementById('displayFoods').style.display='none'" class="cancelbtn">
+	
+						Cancel
+					</button>
+				
+				</div>
+			</form>
+		</div>
+    
+     
+       
 
        
    </div>
+   <script>
+	   document.getElementById('food-id').value = sessionStorage.getItem('id');
+	  
+   </script>
 
-   <script src="main.js"></script>
+   <script src="main.js" ></script>
 </body>
 </html>

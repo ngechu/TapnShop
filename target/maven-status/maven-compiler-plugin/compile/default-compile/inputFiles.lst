@@ -1,6 +1,11 @@
-/home/ngechumunga/Desktop/workspace/TapnShop/src/main/java/beans/Purchase.java
-/home/ngechumunga/Desktop/workspace/TapnShop/src/main/java/beans/FoodItem.java
-/home/ngechumunga/Desktop/workspace/TapnShop/src/main/java/beans/Store.java
+/home/ngechumunga/Desktop/workspace/TapnShop/src/main/java/ejb/StoreBean.java
+/home/ngechumunga/Desktop/workspace/TapnShop/src/main/java/TapnShop/models/Purchase.java
+/home/ngechumunga/Desktop/workspace/TapnShop/src/main/java/TapnShop/models/FoodItem.java
+/home/ngechumunga/Desktop/workspace/TapnShop/src/main/java/auth/models/User.java
+/home/ngechumunga/Desktop/workspace/TapnShop/src/main/java/ejb/FoodItemBean.java
+/home/ngechumunga/Desktop/workspace/TapnShop/src/main/java/ejb/UserBean.java
+/home/ngechumunga/Desktop/workspace/TapnShop/src/main/java/controllers/LoginController.java
 /home/ngechumunga/Desktop/workspace/TapnShop/src/main/java/controllers/StoreController.java
+/home/ngechumunga/Desktop/workspace/TapnShop/src/main/java/com/tracom/base/BaseEntity.java
+/home/ngechumunga/Desktop/workspace/TapnShop/src/main/java/TapnShop/models/Store.java
 /home/ngechumunga/Desktop/workspace/TapnShop/src/main/java/controllers/FoodItemController.java
-/home/ngechumunga/Desktop/workspace/TapnShop/src/main/java/models/DatabaseHelper.java

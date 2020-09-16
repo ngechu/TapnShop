@@ -1,6 +1,11 @@
-beans/FoodItem.class
+TapnShop/models/FoodItem.class
 controllers/StoreController.class
-beans/Store.class
-beans/Purchase.class
+ejb/StoreBean.class
+ejb/UserBean.class
+auth/models/User.class
+TapnShop/models/Store.class
+ejb/FoodItemBean.class
+com/tracom/base/BaseEntity.class
+controllers/LoginController.class
+TapnShop/models/Purchase.class
 controllers/FoodItemController.class
-models/DatabaseHelper.class

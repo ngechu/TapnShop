@@ -1,69 +1,63 @@
 package controllers;
-
-import beans.FoodItem;
+import TapnShop.models.FoodItem;
+import TapnShop.models.Store;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import models.DatabaseHelper;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-
+import ejb.FoodItemBean;
+import javax.ejb.EJB;
+import javax.inject.Inject;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-
 import java.util.List;
 
-@WebServlet("/HealthyDrinks")
+@WebServlet(urlPatterns = {"/BuyNow"})
 
 public class FoodItemController extends HttpServlet {
+    @PersistenceContext
+    EntityManager em;
+
+    @EJB
+    private FoodItemBean foodItemBean;
+    @Inject
+    private FoodItem foodItem;
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
         String store = req.getParameter("store");
-        Session session= DatabaseHelper.getSessionFactory().openSession();
-//        FoodItem foodItem = session.find(FoodItem.class, 1L);
-//        List<FoodItem>foodItems=session.createQuery("FROM FoodItem FI FI.foods where store_id=:storeId")
-//                .setParameter("storeId",Integer.parseInt(store))
-//                .getResultList();
 
-        List<FoodItem> foodItems = session.createQuery("select FI from FoodItem FI join fetch FI.store where FI.store.id = :id ", FoodItem.class)
-                .setParameter("id", Integer.parseInt(store))
-                .getResultList();
+        try{
+            List<FoodItem>foodItems=foodItemBean.list(Integer.parseInt(store));
 
+            final ObjectMapper json = new ObjectMapper();
 
+            resp.getWriter().println(json.writeValueAsString(foodItems));
 
-        final ObjectMapper json = new ObjectMapper();
-        resp.getWriter().println(json.writeValueAsString(foodItems));
-    }
-
-//    @Override
-//    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-////        String action = request.getServletPath();
-////        switch (action){
-////            case "/HealthyDrinks":
-////                getHealthyDrinks(request,response);
-////                break;
-////            case "/ChomaBase":
-////                break;
-////            case "/KukuBase":
-////                break;
-//            String store  = request.getParameter("store");
-//
-//        }
-//    }
-
-    private void getHealthyDrinks(HttpServletRequest request,HttpServletResponse response) throws IOException {
-
-        Session session= DatabaseHelper.getSessionFactory().openSession();
-        Transaction tx=session.getTransaction();
-        tx.begin();
-        List<FoodItem>foodItems=session.createQuery("From FoodItem foods where storeName=:HealthyDrinks").getResultList();
-        final ObjectMapper json = new ObjectMapper();
-        response.getWriter().println(json.writeValueAsString(foodItems));
-
-        tx.commit();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
 
     }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+
+    String storeId=req.getParameter("id");
+        System.out.println(storeId);
+        try {
+            foodItemBean.save(Integer.parseInt(storeId),req);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
 
 }
